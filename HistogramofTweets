@@ -1,0 +1,15 @@
+-- Assume you're given a table Twitter tweet data, write a query to obtain a histogram of tweets posted per user in 2022. 
+Output the tweet count per user as the bucket and the number of Twitter users who fall into that bucket. --
+
+SELECT
+  tweet_count,
+  COUNT(user_id) AS num_users
+FROM
+(SELECT
+  user_id,
+  COUNT(msg) AS tweet_count
+FROM tweets
+WHERE tweet_date >= '01/01/2022' AND tweet_date < '01/01/23'
+GROUP BY user_id) AS user_tweet_count
+GROUP BY tweet_count
+ORDER BY tweet_count;
